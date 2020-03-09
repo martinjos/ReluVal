@@ -1461,6 +1461,14 @@ int forward_prop_interval_equation_linear2(struct NNet *network,\
                 output->upper_matrix.data[i] = tempVal_upper;
                 output->lower_matrix.data[i] = tempVal_lower;
             }
+
+            if(new_equation_lower[inputSize+i*(inputSize+1)] >
+               new_equation_upper[inputSize+i*(inputSize+1)]) {
+                printf("layer %d: column %d: bad interval in bias term: [%g, %g]\n",
+                        layer, i,
+                        new_equation_lower[inputSize+i*(inputSize+1)],
+                        new_equation_upper[inputSize+i*(inputSize+1)]);
+            }
         }
         //printf("\n");
         memcpy(equation_upper, new_equation_upper, sizeof(float)*(inputSize+1)*maxLayerSize);
